@@ -1,6 +1,6 @@
 ### Usage instructions:
 
-See build instructions for Crow in /crow/README.md. For further information about Crow or any issues with it, please visit https://github.com/ipkn/crow.
+See build instructions for Crow in /crow/README.md. For further information about Crow or any issues with it, please visit https://github.com/ipkn/crow. Note that this demo uses HTTP. This can be easily converted to use TLS / HTTPS, see previous link for resources and examples on this.
 
 Install nginx and then see the set-up instructions for nginx in /www/nginx_conf.
 
