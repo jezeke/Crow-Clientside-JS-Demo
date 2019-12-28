@@ -1,0 +1,125 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Crow + JS Demo</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="description" content="Crow backend and JS frontend example page.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Crow + JS Demo">
+  <meta property="og:url" content="https://example.com/">
+  <meta property="og:site_name" content="Crow + JS Demo">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <link rel="stylesheet" href="bootstrap.min.css">
+</head>
+
+<style>
+
+body {
+  padding-top: 100px;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+body nav {
+  box-shadow: 0 0 10px gray;
+}
+main {
+  flex: 1;
+}
+h2 {
+  padding-top: 5%;
+}
+@media (min-width: 768px) {
+  .dropdown-menu {
+    padding: 10px 10px 10px 10px
+  }
+}
+@media (max-width: 768px) {
+  #carouselInfoBottom {
+    padding-top: 5%;
+  }
+}
+#carouselInfoTop {
+  background-color: #008CC4;
+  height: 50%;
+}
+#carouselInfoBottom {
+  background-color: #008CC4;
+  height: 50%;
+}
+.product:hover img {
+  opacity: 0.7;
+}
+.product img {
+  width: 100%;
+  border-style: solid;
+  border-color: #dddd;
+  border-width: 1px;
+  margin-bottom: 2%;
+}
+.d-block {
+  width: 100%;
+}
+#newsletterButton {
+  border-radius: 0 5px 5px 0;
+}
+footer nav {
+  outline-style: solid;
+  outline-width: 1px;
+}
+.cartItem:hover {
+  background-color:#AAA1;
+}
+</style>
+
+<body>
+  <div style="max-width: 300px;" class="nav navbar-nav container-fluid">
+    <strong class="align-self-end navbar-text">Subscribe to our newsletter.</strong>
+    <form class="input-group" id="newsletter" onsubmit="return false">
+      <input type="email" class="form-control" style="max-width: 300px;" placeholder="E-mail Address">
+      <span class="input-group-append">
+        <button id="newsletterButton" type="submit" class="btn btn-success" style="height: calc(1.5em + .75rem + 2px);" type="button">See POST</button>
+      </span>
+    </form>
+  </div>
+</body>
+
+<script src="fetch.umd.min.js"></script>
+<script src="jquery-3.3.1.slim.min.js"></script>
+<script src="popper.min.js"></script>
+<script src="bootstrap.min.js"></script>
+<script>
+  document.querySelector("#newsletter").addEventListener('submit', event => {
+    newsletterPOST(event);
+  })
+
+  const newsletterPOST = event => {
+    fetch('/crow/echo', {
+      method: 'POST',
+      body: event.target[0].value
+    })
+    .then(response => response.text())
+    .then(body => {
+      alert(body);
+    })
+    .catch(error => {
+      alert("An error has occured. Please try again later.");
+      logError(error);
+      console.error(error);
+    })
+  }
+
+  const logError = error => {
+    fetch('/crow/error', {
+      method: 'POST',
+      body: error.toString()
+    })
+    .catch(error => {
+      //nop
+    })
+  }
+</script>

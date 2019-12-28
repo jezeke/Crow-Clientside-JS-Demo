@@ -1,0 +1,23 @@
+# rename & copy to /etc/nginx/sites-available/example.com
+# adjust server_name and copy /www/public to /var/www/example.com/
+# make a symbolic link to sites-enabled
+# ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/example.com
+# restart nginx and start crow
+
+server {
+  listen 80;
+  server_name example.com 192.168.1.2;
+
+  location /crow {
+    proxy_pass http://localhost:40080;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection 'upgrade';
+    proxy_set_header Host $host;
+    proxy_cache_bypass $http_upgrade;
+  }
+  location / {
+    root /var/www/example.com/public/
+    index index.html;
+  }
+}
